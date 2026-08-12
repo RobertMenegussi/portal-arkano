@@ -99,6 +99,39 @@
     }
     .sigil-caption{position:absolute;bottom:34px;left:34px;right:34px;display:flex;justify-content:space-between;font:700 10px/1 Consolas,"Courier New",monospace;color:var(--muted);letter-spacing:.12em}
 
+
+    .known-bugs{
+      margin-top:40px;
+      border:1px solid var(--line-strong);
+      padding:22px 24px 20px;
+      background:rgba(17,17,15,.025);
+    }
+    .known-bugs-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding-bottom:13px;
+      margin-bottom:14px;
+      border-bottom:1px solid var(--line);
+      font:800 11px/1 Consolas,"Courier New",monospace;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .known-bugs-badge{
+      font-size:9px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .bug-list{
+      margin:0;
+      padding-left:18px;
+      color:#393732;
+      font-size:13px;
+      line-height:1.65;
+    }
+    .bug-list li + li{margin-top:7px}
+
     .archive{padding-top:40px}
     .archive-head{display:grid;grid-template-columns:120px 1fr 110px;gap:22px;padding:0 0 12px;border-bottom:1px solid var(--line-strong);font:700 10px/1 Consolas,"Courier New",monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
     .row{display:grid;grid-template-columns:120px 1fr 110px;gap:22px;align-items:center;min-height:82px;border-bottom:1px solid var(--line);transition:background .16s ease,padding .16s ease}
@@ -157,6 +190,17 @@
         </div>
         <div class="sigil-caption"><span>ORBITAL // ARCHIVE</span><span id="sigilBuild">----</span></div>
       </div>
+    </section>
+
+
+    <section class="known-bugs enter delay">
+      <div class="known-bugs-head">
+        <span>BUGS DA BUILD ATUAL — JÁ RECONHECIDOS</span>
+        <span class="known-bugs-badge">EM CORREÇÃO</span>
+      </div>
+      <ul class="bug-list">
+        <li>Existem blocos/colisões invisíveis em alguns pontos do mapa que podem travar o personagem às vezes.</li>
+      </ul>
     </section>
 
     <section class="archive enter delay">
