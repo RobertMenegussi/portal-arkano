@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#e8e4da">
+  <title>ARCANO // Playtest</title>
+  <style>
+    :root{
+      --paper:#e8e4da;
+      --paper-2:#ded9ce;
+      --ink:#11110f;
+      --muted:#656159;
+      --line:rgba(17,17,15,.17);
+      --line-strong:rgba(17,17,15,.34);
+    }
+    *{box-sizing:border-box}
+    html{background:var(--paper)}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        repeating-linear-gradient(0deg,rgba(17,17,15,.013) 0 1px,transparent 1px 4px),
+        var(--paper);
+      color:var(--ink);
+      font-family:"Segoe UI",Arial,sans-serif;
+      overflow-x:hidden;
+    }
+    button,a{font:inherit}
+    ::selection{background:var(--ink);color:var(--paper)}
+
+    .shell{width:min(1180px,calc(100% - 48px));margin:0 auto;padding:30px 0 64px}
+
+    .topbar{
+      height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid var(--line-strong);
+    }
+    .brand{display:flex;align-items:center;gap:13px;min-width:0}
+    .brand-logo{display:block;width:min(190px,42vw);height:auto;max-height:34px;object-fit:contain;object-position:left center;filter:drop-shadow(0 1px 0 rgba(17,17,15,.08))}
+    .build-tag{font:700 11px/1 Consolas,"Courier New",monospace;letter-spacing:.08em;color:var(--muted)}
+
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+      min-height:440px;
+      border-bottom:1px solid var(--line-strong);
+    }
+    .hero-copy{padding:72px 72px 68px 0;display:flex;flex-direction:column;justify-content:center}
+    .kicker{font:700 11px/1 Consolas,"Courier New",monospace;letter-spacing:.16em;color:var(--muted);margin-bottom:20px}
+    .title{margin:0;font-size:clamp(54px,8vw,104px);line-height:.84;letter-spacing:-.075em;font-weight:900}
+    .title span{display:block;font-size:.26em;line-height:1.2;letter-spacing:.08em;margin-top:18px;font-weight:700;font-family:Consolas,"Courier New",monospace}
+    .notes{max-width:620px;margin:30px 0 0;font-size:14px;line-height:1.7;color:#393732}
+    .actions{display:flex;align-items:center;gap:20px;margin-top:36px}
+    .download{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:42px;
+      min-width:260px;
+      height:56px;
+      padding:0 18px;
+      color:var(--paper);
+      background:var(--ink);
+      border:1px solid var(--ink);
+      text-decoration:none;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      transition:transform .16s ease,box-shadow .16s ease;
+    }
+    .download:after{content:"↓";font-size:19px;font-weight:400;transition:transform .18s ease}
+    .download:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(17,17,15,.14)}
+    .download:hover:after{transform:translateY(2px)}
+    .platform{font:600 11px/1.5 Consolas,"Courier New",monospace;color:var(--muted)}
+
+    .sigil-wrap{
+      border-left:1px solid var(--line-strong);
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+      min-height:440px;
+    }
+    .sigil-wrap:before,.sigil-wrap:after{content:"";position:absolute;inset:16%;border:1px solid var(--line);border-radius:50%}
+    .sigil-wrap:after{inset:28%;border-color:rgba(17,17,15,.10)}
+    .sigil{width:210px;height:210px;position:relative;display:grid;place-items:center}
+    .core{width:46px;height:46px;background:var(--ink);transform:rotate(45deg);position:relative}
+    .core:before{content:"";position:absolute;inset:13px;border:2px solid var(--paper)}
+    .stone{position:absolute;width:13px;height:13px;background:var(--ink);transform:rotate(45deg);animation:orbit 8s linear infinite}
+    .stone:nth-child(2){animation-delay:-1.333s}.stone:nth-child(3){animation-delay:-2.666s}.stone:nth-child(4){animation-delay:-4s}.stone:nth-child(5){animation-delay:-5.333s}.stone:nth-child(6){animation-delay:-6.666s}
+    @keyframes orbit{
+      from{transform:rotate(0deg) translateX(86px) rotate(45deg)}
+      to{transform:rotate(360deg) translateX(86px) rotate(-315deg)}
+    }
+    .sigil-caption{position:absolute;bottom:34px;left:34px;right:34px;display:flex;justify-content:space-between;font:700 10px/1 Consolas,"Courier New",monospace;color:var(--muted);letter-spacing:.12em}
+
+    .archive{padding-top:40px}
+    .archive-head{display:grid;grid-template-columns:120px 1fr 110px;gap:22px;padding:0 0 12px;border-bottom:1px solid var(--line-strong);font:700 10px/1 Consolas,"Courier New",monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+    .row{display:grid;grid-template-columns:120px 1fr 110px;gap:22px;align-items:center;min-height:82px;border-bottom:1px solid var(--line);transition:background .16s ease,padding .16s ease}
+    .row:hover{background:rgba(17,17,15,.035);padding:0 10px}
+    .num{font:900 24px/1 Consolas,"Courier New",monospace;letter-spacing:-.06em}
+    .row-title{font-size:14px;font-weight:800;margin-bottom:5px}
+    .row-meta{font:500 11px/1.55 Consolas,"Courier New",monospace;color:var(--muted)}
+    .row a{justify-self:end;color:var(--ink);font-size:11px;font-weight:800;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+    .row a:hover{opacity:.55}
+
+    .foot{display:flex;justify-content:space-between;gap:20px;padding-top:26px;font:600 10px/1.5 Consolas,"Courier New",monospace;color:var(--muted)}
+
+    .enter{opacity:0;transform:translateY(10px);animation:enter .45s cubic-bezier(.2,.8,.2,1) forwards}
+    .delay{animation-delay:.06s}
+    @keyframes enter{to{opacity:1;transform:none}}
+
+    @media(max-width:760px){
+      .shell{width:min(100% - 26px,1180px);padding-top:18px}
+      .brand-logo{width:min(150px,52vw);max-height:28px}
+      .hero{grid-template-columns:1fr}
+      .hero-copy{padding:56px 0 42px}
+      .sigil-wrap{border-left:0;border-top:1px solid var(--line-strong);min-height:310px}
+      .actions{align-items:flex-start;flex-direction:column}
+      .download{width:100%}
+      .archive-head{display:none}
+      .row{grid-template-columns:76px 1fr;gap:14px;padding:18px 0}
+      .row:hover{padding:18px 0;background:transparent}
+      .row a{grid-column:2;justify-self:start}
+      .foot{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar enter">
+      <div class="brand"><img class="brand-logo" src="arkano_logo.png" alt="ARKANO"></div>
+      <div class="build-tag" id="topBuild">BUILD ----</div>
+    </header>
+
+    <section class="hero enter delay">
+      <div class="hero-copy">
+        <div class="kicker">PLAYTEST / WINDOWS</div>
+        <h1 class="title">BUILD <span id="heroVersion">0.0.0 PRE-ALPHA</span></h1>
+        <p class="notes" id="heroNotes"></p>
+        <div class="actions">
+          <a class="download" id="mainDownload" href="#">Baixar build</a>
+          <div class="platform" id="heroDate"></div>
+        </div>
+      </div>
+
+      <div class="sigil-wrap" aria-hidden="true">
+        <div class="sigil">
+          <div class="core"></div>
+          <div class="stone"></div><div class="stone"></div><div class="stone"></div>
+          <div class="stone"></div><div class="stone"></div><div class="stone"></div>
+        </div>
+        <div class="sigil-caption"><span>ORBITAL // ARCHIVE</span><span id="sigilBuild">----</span></div>
+      </div>
+    </section>
+
+    <section class="archive enter delay">
+      <div class="archive-head"><span>Build</span><span>Alterações</span><span>Arquivo</span></div>
+      <div id="history"></div>
+    </section>
+
+    <footer class="foot">
+      <span>ARCANO / PLAYTEST</span>
+      <span>Última build no topo. As antigas continuam disponíveis.</span>
+    </footer>
+  </main>
+
+  <script>
+    /*
+      PRA ATUALIZAR:
+      1. coloque o ZIP novo em /builds
+      2. copie o bloco mais recente abaixo
+      3. cole em cima, troque os dados e faça commit/push
+    */
+    const BUILDS = [
+      {
+        build: "0722",
+        version: "0.5.1 PRE-ALPHA",
+        date: "12/08/2026",
+        title: "Samurai Manual Aim Hotfix",
+        file: "builds/ARCANO_0.5.1_PREALPHA_BUILD_0722_SAMURAI_MANUAL_AIM_HOTFIX.zip",
+        notes: "Correção da mira manual do Samurai e atualização da direção real do slash."
+      }
+      // novas builds entram aqui em cima
+    ];
+
+    const latest = BUILDS[0];
+    const $ = id => document.getElementById(id);
+
+    $("topBuild").textContent = `BUILD ${latest.build}`;
+    $("heroVersion").textContent = `${latest.version} / ${latest.title}`;
+    $("heroNotes").textContent = latest.notes;
+    $("heroDate").textContent = `${latest.date}\nBUILD ${latest.build}`;
+    $("sigilBuild").textContent = latest.build;
+    $("mainDownload").href = latest.file;
+    $("mainDownload").setAttribute("download", "");
+
+    const history = $("history");
+    BUILDS.forEach((b,i)=>{
+      const row = document.createElement("article");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="num">${b.build}</div>
+        <div>
+          <div class="row-title">${i === 0 ? "ATUAL — " : ""}${b.title}</div>
+          <div class="row-meta">${b.version} / ${b.date}<br>${b.notes}</div>
+        </div>
+        <a href="${b.file}" download>BAIXAR ZIP</a>`;
+      history.appendChild(row);
+    });
+
+    // clique seco, bem baixo. Sem synth de hover em cada botão.
+    let ctx;
+    document.addEventListener("click", e => {
+      if(!e.target.closest("a")) return;
+      try{
+        ctx ||= new (window.AudioContext || window.webkitAudioContext)();
+        const o=ctx.createOscillator(), g=ctx.createGain();
+        o.type="sine"; o.frequency.value=210; g.gain.value=.007;
+        o.connect(g); g.connect(ctx.destination); o.start();
+        g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.035);
+        o.stop(ctx.currentTime+.035);
+      }catch(_e){}
+    });
+  </script>
+</body>
+</html>
