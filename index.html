@@ -726,7 +726,6 @@ $("heroVersion").textContent = `${latest.version} / ${latest.title}`;
 $("heroNotes").textContent = latest.notes;
 $("heroDate").textContent = `${latest.date} • BUILD ${latest.build}`;
 $("heroFile").textContent = buildFile(latest).split("/").pop();
-$("artBuild").textContent = latest.build;
 $("mainDownload").href = buildFile(latest);
 $("mainDownload").setAttribute("download", "");
 
