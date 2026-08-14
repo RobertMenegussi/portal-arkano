@@ -715,7 +715,7 @@ button,a{font:inherit}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .topbar,.kicker,.hero-title,.build-number,.hero-version,.hero-notes,.hero-actions,
-  .reveal,.build-row{
+  .reveal,.build-row,.gameplay-panel{
     opacity:1!important;
     transform:none!important;
     filter:none!important;
@@ -732,34 +732,41 @@ button,a{font:inherit}
 /* LANGUAGE SWITCHER */
 .language-switcher{
   position:fixed;
-  top:13px;
-  right:16px;
+  top:12px;
+  right:max(18px, calc((100vw - 1240px)/2));
   z-index:220;
   display:flex;
   align-items:center;
-  gap:3px;
-  padding:4px;
-  border:1px solid var(--line-2);
-  border-radius:10px;
-  background:rgba(241,235,223,.94);
+  gap:5px;
+  padding:6px;
+  border:1px solid var(--ink);
+  border-radius:12px;
+  background:rgba(241,235,223,.97);
   backdrop-filter:blur(14px);
-  box-shadow:0 7px 24px rgba(17,16,14,.10);
+  box-shadow:0 9px 28px rgba(17,16,14,.14);
+}
+.language-label{
+  padding:0 8px 0 7px;
+  color:var(--muted);
+  font:900 10px/1 Consolas,monospace;
+  letter-spacing:.12em;
 }
 .language-switcher button{
-  min-width:42px;
-  height:30px;
-  padding:0 9px;
-  border:0;
-  border-radius:7px;
+  min-width:52px;
+  height:36px;
+  padding:0 12px;
+  border:1px solid transparent;
+  border-radius:8px;
   background:transparent;
-  color:var(--muted);
+  color:var(--ink);
   cursor:pointer;
-  font:900 9px/1 Consolas,monospace;
-  letter-spacing:.07em;
-  transition:background .16s ease,color .16s ease,transform .16s ease;
+  font:950 11px/1 Consolas,monospace;
+  letter-spacing:.06em;
+  transition:background .16s ease,color .16s ease,transform .16s ease,border-color .16s ease;
 }
 .language-switcher button:hover{
-  color:var(--ink);
+  border-color:var(--line-2);
+  background:rgba(17,16,14,.045);
 }
 .language-switcher button.active{
   background:var(--ink);
@@ -769,23 +776,139 @@ button,a{font:inherit}
   transform:scale(.96);
 }
 
-/* deixa espaço no desktop para o seletor não cobrir a navegação */
+/* HERO COM GAMEPLAY */
+.hero{
+  min-height:590px;
+}
+.hero-layout{
+  position:relative;
+  z-index:2;
+  width:100%;
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(390px,1.08fr);
+  gap:clamp(34px,5vw,74px);
+  align-items:center;
+}
+.hero-copy{
+  z-index:auto;
+}
+.gameplay-panel{
+  position:relative;
+  opacity:0;
+  transform:translateY(18px) scale(.985);
+  animation:gameplayIn .7s cubic-bezier(.16,1,.3,1) .72s forwards;
+}
+.gameplay-frame{
+  position:relative;
+  padding:9px;
+  border:1px solid var(--line-2);
+  background:rgba(232,225,211,.72);
+  box-shadow:
+    0 22px 60px rgba(17,16,14,.14),
+    0 2px 0 rgba(255,255,255,.45) inset;
+}
+.gameplay-frame:before{
+  content:"";
+  position:absolute;
+  inset:-7px 13px 13px -7px;
+  border:1px solid rgba(17,16,14,.16);
+  pointer-events:none;
+  z-index:-1;
+}
+.gameplay-video{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  background:#111;
+}
+.gameplay-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:10px;
+  color:var(--muted);
+  font:850 9px/1.2 Consolas,monospace;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.gameplay-live{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.gameplay-live:before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 0 0 rgba(164,42,32,.35);
+  animation:gameplayPulse 1.8s ease-out infinite;
+}
+@keyframes gameplayIn{
+  to{opacity:1;transform:none}
+}
+@keyframes gameplayPulse{
+  0%{box-shadow:0 0 0 0 rgba(164,42,32,.38)}
+  65%,100%{box-shadow:0 0 0 7px rgba(164,42,32,0)}
+}
+
 @media(min-width:721px){
-  .topbar .nav{margin-right:118px}
+  .topbar .nav{margin-right:192px}
+}
+@media(max-width:980px){
+  .hero-layout{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+  .hero-copy{
+    padding-bottom:42px;
+  }
+  .gameplay-panel{
+    width:min(100%,760px);
+    padding-bottom:72px;
+  }
 }
 @media(max-width:720px){
   .language-switcher{
-    top:11px;
+    top:8px;
     right:12px;
+    padding:4px;
+    gap:3px;
+  }
+  .language-label{
+    display:none;
+  }
+  .language-switcher button{
+    min-width:46px;
+    height:34px;
+    padding:0 9px;
+    font-size:10px;
+  }
+  .topbar .nav{
+    margin-right:116px;
+  }
+  .hero-layout{
+    gap:0;
   }
 }
-
+@media(max-width:560px){
+  .gameplay-frame{
+    padding:6px;
+  }
+  .gameplay-meta{
+    font-size:8px;
+    letter-spacing:.09em;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="language-switcher" aria-label="Language selector">
+  <span class="language-label">LANG</span>
   <button type="button" id="langEN" data-lang="en">EN</button>
   <button type="button" id="langPT" data-lang="pt">PT-BR</button>
 </div>
@@ -813,6 +936,7 @@ button,a{font:inherit}
   <section class="hero">
     <div class="hero-grid" aria-hidden="true"></div>
 
+    <div class="hero-layout">
     <div class="hero-copy">
       <div class="kicker" data-i18n="playtestWindows">PLAYTEST / WINDOWS</div>
 
@@ -850,6 +974,26 @@ button,a{font:inherit}
           <span id="smartScreenText"><strong>SmartScreen:</strong> because this is a new build, Windows may show an “unrecognized app” warning. Before running it, confirm that the file was downloaded from this website and verify it with VirusTotal.</span>
         </div>
       </div>
+    </div>
+
+      <aside class="gameplay-panel" aria-label="Gameplay from current build">
+        <div class="gameplay-frame">
+          <video
+            class="gameplay-video"
+            src="arkano_gameplay_0734.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+            preload="metadata"
+          ></video>
+        </div>
+        <div class="gameplay-meta">
+          <span class="gameplay-live">Gameplay</span>
+          <span>Build 0734</span>
+        </div>
+      </aside>
     </div>
   </section>
 
