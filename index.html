@@ -902,6 +902,102 @@ button,a{font:inherit}
     letter-spacing:.09em;
   }
 }
+
+/* ITCH.IO EMBED */
+.itch-section{
+  position:relative;
+  z-index:3;
+  width:100%;
+  margin:18px 0 34px;
+  padding:0;
+}
+.itch-shell{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:18px 20px;
+  border:1px solid var(--line-2);
+  background:rgba(232,225,211,.68);
+  box-shadow:0 14px 40px rgba(17,16,14,.08);
+}
+.itch-copy{
+  min-width:190px;
+}
+.itch-kicker{
+  margin-bottom:7px;
+  color:var(--red);
+  font:900 9px/1 Consolas,monospace;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.itch-title{
+  margin:0;
+  color:var(--ink);
+  font-size:clamp(19px,2.1vw,27px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+}
+.itch-sub{
+  margin:8px 0 0;
+  max-width:440px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+.itch-embed-wrap{
+  flex:0 1 560px;
+  width:100%;
+}
+.itch-embed-wrap iframe{
+  display:block;
+  width:100%;
+  max-width:560px;
+  height:175px;
+  margin-left:auto;
+  border:0;
+}
+@media(max-width:900px){
+  .itch-shell{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .itch-copy{
+    min-width:0;
+  }
+  .itch-embed-wrap{
+    flex-basis:auto;
+    max-width:560px;
+  }
+  .itch-embed-wrap iframe{
+    margin-left:0;
+  }
+}
+@media(max-width:600px){
+  .itch-section{
+    margin-top:4px;
+  }
+  .itch-shell{
+    padding:14px;
+  }
+  .itch-embed-wrap{
+    overflow:hidden;
+  }
+  .itch-embed-wrap iframe{
+    width:560px;
+    max-width:none;
+    transform-origin:top left;
+    transform:scale(.78);
+    margin-bottom:-38px;
+  }
+}
+@media(max-width:470px){
+  .itch-embed-wrap iframe{
+    transform:scale(.62);
+    margin-bottom:-66px;
+  }
+}
+
 </style>
 </head>
 
@@ -994,6 +1090,29 @@ button,a{font:inherit}
           <span>Build 0734</span>
         </div>
       </aside>
+    </div>
+  </section>
+
+
+  <section class="itch-section reveal" id="itch">
+    <div class="itch-shell">
+      <div class="itch-copy">
+        <div class="itch-kicker" data-i18n="itchKicker">ALSO ON ITCH.IO</div>
+        <h2 class="itch-title" data-i18n="itchTitle">Play ARKANO on itch.io</h2>
+        <p class="itch-sub" data-i18n="itchSub">Prefer itch.io? The current Open Alpha is available there too.</p>
+      </div>
+
+      <div class="itch-embed-wrap">
+        <iframe
+          frameborder="0"
+          loading="lazy"
+          src="https://itch.io/embed/4894991?linkback=true&amp;border_width=5&amp;bg_color=ac9c6d&amp;link_color=fee8b3&amp;border_color=000000"
+          width="560"
+          height="175"
+          title="ARKANO on itch.io">
+          <a href="https://robydamah.itch.io/arkano">Arkano by Robydamah</a>
+        </iframe>
+      </div>
     </div>
   </section>
 
@@ -1117,7 +1236,10 @@ const TEXT = {
     fixing: "Fix in progress",
     current: "Current",
     downloadRar: "Download RAR ↓",
-    blocked: "Download locked"
+    blocked: "Download locked",
+    itchKicker: "ALSO ON ITCH.IO",
+    itchTitle: "Play ARKANO on itch.io",
+    itchSub: "Prefer itch.io? The current Open Alpha is available there too."
   },
   pt: {
     navAria: "Navegação",
@@ -1138,7 +1260,10 @@ const TEXT = {
     fixing: "Em correção",
     current: "Atual",
     downloadRar: "Baixar RAR ↓",
-    blocked: "Download bloqueado"
+    blocked: "Download bloqueado",
+    itchKicker: "TAMBÉM NO ITCH.IO",
+    itchTitle: "Jogue ARKANO pelo itch.io",
+    itchSub: "Prefere o itch.io? A Open Alpha atual também está disponível por lá."
   }
 };
 
