@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -728,10 +728,68 @@ button,a{font:inherit}
     animation:none!important;
   }
 }
+
+/* LANGUAGE SWITCHER */
+.language-switcher{
+  position:fixed;
+  top:13px;
+  right:16px;
+  z-index:220;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  padding:4px;
+  border:1px solid var(--line-2);
+  border-radius:10px;
+  background:rgba(241,235,223,.94);
+  backdrop-filter:blur(14px);
+  box-shadow:0 7px 24px rgba(17,16,14,.10);
+}
+.language-switcher button{
+  min-width:42px;
+  height:30px;
+  padding:0 9px;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font:900 9px/1 Consolas,monospace;
+  letter-spacing:.07em;
+  transition:background .16s ease,color .16s ease,transform .16s ease;
+}
+.language-switcher button:hover{
+  color:var(--ink);
+}
+.language-switcher button.active{
+  background:var(--ink);
+  color:var(--paper);
+}
+.language-switcher button:active{
+  transform:scale(.96);
+}
+
+/* deixa espaço no desktop para o seletor não cobrir a navegação */
+@media(min-width:721px){
+  .topbar .nav{margin-right:118px}
+}
+@media(max-width:720px){
+  .language-switcher{
+    top:11px;
+    right:12px;
+  }
+}
+
 </style>
 </head>
 
 <body>
+
+<div class="language-switcher" aria-label="Language selector">
+  <button type="button" id="langEN" data-lang="en">EN</button>
+  <button type="button" id="langPT" data-lang="pt">PT-BR</button>
+</div>
+
 <div class="grain" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -741,7 +799,7 @@ button,a{font:inherit}
       <img class="brand-logo" src="arkano_logo.png" alt="ARKANO">
     </div>
 
-    <nav class="nav" aria-label="Navegação">
+    <nav class="nav" id="mainNav" aria-label="Navigation">
       <a href="#bugs">Bugs</a>
       <a href="#builds">Builds</a>
     </nav>
@@ -749,14 +807,14 @@ button,a{font:inherit}
 
   <div class="alpha-banner">
     <strong>OPEN ALPHA</strong>
-    <span>Build 0734 — primeira versão aberta para testes.</span>
+    <span data-i18n="alphaDescription">Build 0734 — first public test release.</span>
   </div>
 
   <section class="hero">
     <div class="hero-grid" aria-hidden="true"></div>
 
     <div class="hero-copy">
-      <div class="kicker">PLAYTEST / WINDOWS</div>
+      <div class="kicker" data-i18n="playtestWindows">PLAYTEST / WINDOWS</div>
 
       <h1 class="hero-title">
         BUILD
@@ -769,7 +827,7 @@ button,a{font:inherit}
       <div class="hero-actions">
         <div class="security-actions">
           <a class="download-main" id="mainDownload" href="#">
-            <span>Baixar build</span>
+            <span data-i18n="downloadBuild">Download build</span>
             <span class="download-arrow">↓</span>
           </a>
 
@@ -777,7 +835,7 @@ button,a{font:inherit}
             <span class="vt-mark">VT</span>
             <span class="vt-copy">
               <span id="virusTotalText">VirusTotal</span>
-              <small id="virusTotalSubtext">Escanear arquivo</small>
+              <small id="virusTotalSubtext">Scan file</small>
             </span>
           </a>
         </div>
@@ -789,7 +847,7 @@ button,a{font:inherit}
 
         <div class="smartscreen-warning">
           <span class="warning-icon">!</span>
-          <span><strong>SmartScreen:</strong> por ser uma build nova, o Windows pode exibir um aviso de “aplicativo não reconhecido”. Antes de executar, confirme que o arquivo foi baixado deste site e faça a verificação no VirusTotal.</span>
+          <span id="smartScreenText"><strong>SmartScreen:</strong> because this is a new build, Windows may show an “unrecognized app” warning. Before running it, confirm that the file was downloaded from this website and verify it with VirusTotal.</span>
         </div>
       </div>
     </div>
@@ -798,21 +856,21 @@ button,a{font:inherit}
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
       <span>ARKANO OPEN ALPHA</span>
-      <span>BUILD ATUAL 0734</span>
+      <span data-i18n="tickerCurrent">CURRENT BUILD 0734</span>
       <span>ARKANO PLAYTEST</span>
-      <span>BUILD ATUAL 0734</span>
+      <span data-i18n="tickerCurrent">CURRENT BUILD 0734</span>
       <span>ARKANO OPEN ALPHA</span>
-      <span>BUILD ATUAL 0734</span>
+      <span data-i18n="tickerCurrent">CURRENT BUILD 0734</span>
       <span>ARKANO PLAYTEST</span>
-      <span>BUILD ATUAL 0734</span>
+      <span data-i18n="tickerCurrent">CURRENT BUILD 0734</span>
     </div>
   </div>
 
   <section class="section reveal" id="bugs">
     <div class="section-head">
       <div>
-        <div class="section-kicker">STATUS ATUAL</div>
-        <h2 class="section-title">Bugs conhecidos</h2>
+        <div class="section-kicker" data-i18n="currentStatus">CURRENT STATUS</div>
+        <h2 class="section-title" data-i18n="knownBugs">Known bugs</h2>
       </div>
       <div class="section-count" id="bugCount">00</div>
     </div>
@@ -823,7 +881,7 @@ button,a{font:inherit}
   <section class="section reveal" id="builds">
     <div class="section-head">
       <div>
-        <div class="section-kicker">DOWNLOADS</div>
+        <div class="section-kicker" data-i18n="downloads">DOWNLOADS</div>
         <h2 class="section-title">Builds</h2>
       </div>
       <div class="section-count" id="buildCount">00</div>
@@ -832,8 +890,8 @@ button,a{font:inherit}
     <div class="archive">
       <div class="archive-head">
         <span>Build</span>
-        <span>Alterações</span>
-        <span style="text-align:right">Arquivo</span>
+        <span data-i18n="changes">Changes</span>
+        <span style="text-align:right" data-i18n="file">File</span>
       </div>
       <div id="history"></div>
     </div>
@@ -841,7 +899,7 @@ button,a{font:inherit}
 
   <footer class="footer">
     <span>ARKANO / PLAYTEST</span>
-    <span>Última build no topo. Builds antigas continuam disponíveis.</span>
+    <span data-i18n="footerText">Latest build first. Older builds remain listed.</span>
   </footer>
 </main>
 
@@ -851,100 +909,223 @@ const BUILDS = [
     build: "0734",
     version: "OPEN ALPHA",
     date: "13/08/2026",
-    title: "Primeira Open Alpha",
-    notes: "Primeira build aberta para testes públicos."
+    title: {
+      en: "First Open Alpha",
+      pt: "Primeira Open Alpha"
+    },
+    notes: {
+      en: "First build open for public testing.",
+      pt: "Primeira build aberta para testes públicos."
+    }
   },
   {
     build: "0729",
     version: "PRE-ALPHA",
     date: "13/08/2026",
-    title: "Build 0729",
-    notes: "Build anterior de playtest."
+    title: {
+      en: "Build 0729",
+      pt: "Build 0729"
+    },
+    notes: {
+      en: "Previous playtest build.",
+      pt: "Build anterior de playtest."
+    }
   },
   {
     build: "0722",
     version: "0.5.1 PRE-ALPHA",
     date: "12/08/2026",
-    title: "Samurai Manual Aim Hotfix",
-    notes: "Correção da mira manual do Samurai e atualização da direção real do slash."
+    title: {
+      en: "Samurai Manual Aim Hotfix",
+      pt: "Samurai Manual Aim Hotfix"
+    },
+    notes: {
+      en: "Fixed Samurai manual aiming and updated the slash direction.",
+      pt: "Correção da mira manual do Samurai e atualização da direção real do slash."
+    }
   }
 ];
 
 const KNOWN_BUGS = [
-  "Existem blocos/colisões invisíveis em alguns pontos do mapa que podem travar o personagem às vezes."
+  {
+    en: "Invisible collision blocks in some areas of the map can occasionally trap the player.",
+    pt: "Existem blocos/colisões invisíveis em alguns pontos do mapa que podem travar o personagem às vezes."
+  }
 ];
+
+const TEXT = {
+  en: {
+    navAria: "Navigation",
+    alphaDescription: "Build 0734 — first public test release.",
+    playtestWindows: "PLAYTEST / WINDOWS",
+    downloadBuild: "Download build",
+    scanFile: "Scan file",
+    viewResult: "View result",
+    smartScreen: '<strong>SmartScreen:</strong> because this is a new build, Windows may show an “unrecognized app” warning. Before running it, confirm that the file was downloaded from this website and verify it with VirusTotal.',
+    tickerCurrent: "CURRENT BUILD 0734",
+    currentStatus: "CURRENT STATUS",
+    knownBugs: "Known bugs",
+    downloads: "DOWNLOADS",
+    changes: "Changes",
+    file: "File",
+    footerText: "Latest build first. Older builds remain listed.",
+    recognized: "Known",
+    fixing: "Fix in progress",
+    current: "Current",
+    downloadRar: "Download RAR ↓",
+    blocked: "Download locked"
+  },
+  pt: {
+    navAria: "Navegação",
+    alphaDescription: "Build 0734 — primeira versão aberta para testes.",
+    playtestWindows: "PLAYTEST / WINDOWS",
+    downloadBuild: "Baixar build",
+    scanFile: "Escanear arquivo",
+    viewResult: "Ver resultado",
+    smartScreen: '<strong>SmartScreen:</strong> por ser uma build nova, o Windows pode exibir um aviso de “aplicativo não reconhecido”. Antes de executar, confirme que o arquivo foi baixado deste site e faça a verificação no VirusTotal.',
+    tickerCurrent: "BUILD ATUAL 0734",
+    currentStatus: "STATUS ATUAL",
+    knownBugs: "Bugs conhecidos",
+    downloads: "DOWNLOADS",
+    changes: "Alterações",
+    file: "Arquivo",
+    footerText: "Última build no topo. Builds antigas continuam listadas.",
+    recognized: "Reconhecido",
+    fixing: "Em correção",
+    current: "Atual",
+    downloadRar: "Baixar RAR ↓",
+    blocked: "Download bloqueado"
+  }
+};
 
 const $ = id => document.getElementById(id);
 const latest = BUILDS[0];
 
-/*
-  Quando tiver o relatório da build 0734 no VirusTotal,
-  cole o link abaixo. Enquanto estiver vazio, o botão abre
-  a página oficial para upload/scan.
-*/
 const VIRUSTOTAL_REPORT_URL = "";
 const VIRUSTOTAL_UPLOAD_URL = "https://www.virustotal.com/gui/home/upload";
 
 /* RAR automático: basta informar o número da build */
 const buildFile = build => `builds/Arkano-build-${build.build}.rar`;
 
-$("heroBuild").textContent = latest.build;
-$("heroVersion").textContent = `${latest.version} / ${latest.title}`;
-$("heroNotes").textContent = latest.notes;
-$("heroDate").textContent = `${latest.date} • BUILD ${latest.build}`;
-$("heroFile").textContent = buildFile(latest).split("/").pop();
-$("mainDownload").href = buildFile(latest);
-$("mainDownload").setAttribute("download", "");
-
-const vtLink = $("virusTotalLink");
-if (VIRUSTOTAL_REPORT_URL) {
-  vtLink.href = VIRUSTOTAL_REPORT_URL;
-  $("virusTotalText").textContent = "VirusTotal";
-  $("virusTotalSubtext").textContent = "Ver resultado";
-} else {
-  vtLink.href = VIRUSTOTAL_UPLOAD_URL;
-  $("virusTotalText").textContent = "VirusTotal";
-  $("virusTotalSubtext").textContent = "Escanear arquivo";
+const LANGUAGE_KEY = "arkano-language";
+let currentLanguage = localStorage.getItem(LANGUAGE_KEY);
+if (currentLanguage !== "pt" && currentLanguage !== "en") {
+  currentLanguage = "en";
 }
 
-$("buildCount").textContent = String(BUILDS.length).padStart(2, "0");
-$("bugCount").textContent = String(KNOWN_BUGS.length).padStart(2, "0");
+function translated(value) {
+  if (typeof value === "string") return value;
+  return value[currentLanguage] || value.en || value.pt || "";
+}
 
-KNOWN_BUGS.forEach((bug, i) => {
-  const row = document.createElement("div");
-  row.className = "bug-strip";
-  row.innerHTML = `
-    <span class="bug-status">Reconhecido</span>
-    <p class="bug-text">${bug}</p>
-    <span class="bug-state">Em correção</span>
-  `;
-  $("bugList").appendChild(row);
-});
+function renderStaticTranslations() {
+  const t = TEXT[currentLanguage];
 
-BUILDS.forEach((build, i) => {
-  const row = document.createElement("article");
-  row.className = "build-row";
+  document.documentElement.lang = currentLanguage === "pt" ? "pt-BR" : "en";
+  $("mainNav").setAttribute("aria-label", t.navAria);
 
-  const action = i === 0
-    ? `<a class="build-download" href="${buildFile(build)}" download>Baixar RAR ↓</a>`
-    : `<span class="build-download disabled">Download bloqueado</span>`;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
 
-  row.innerHTML = `
-    <div class="build-id">
-      ${build.build}
-      ${i === 0 ? '<span class="current">Atual</span>' : ''}
-    </div>
+  $("smartScreenText").innerHTML = t.smartScreen;
 
-    <div>
-      <div class="build-title">${build.title}</div>
-      <div class="build-notes">${build.notes}</div>
-      <div class="build-date">${build.version} • ${build.date}</div>
-    </div>
+  $("langEN").classList.toggle("active", currentLanguage === "en");
+  $("langPT").classList.toggle("active", currentLanguage === "pt");
+  $("langEN").setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
+  $("langPT").setAttribute("aria-pressed", currentLanguage === "pt" ? "true" : "false");
+}
 
-    ${action}
-  `;
-  $("history").appendChild(row);
-});
+function renderHero() {
+  const t = TEXT[currentLanguage];
+
+  $("heroBuild").textContent = latest.build;
+  $("heroVersion").textContent = `${latest.version} / ${translated(latest.title)}`;
+  $("heroNotes").textContent = translated(latest.notes);
+  $("heroDate").textContent = `${latest.date} • BUILD ${latest.build}`;
+  $("heroFile").textContent = buildFile(latest).split("/").pop();
+  $("mainDownload").href = buildFile(latest);
+  $("mainDownload").setAttribute("download", "");
+
+  const vtLink = $("virusTotalLink");
+  if (VIRUSTOTAL_REPORT_URL) {
+    vtLink.href = VIRUSTOTAL_REPORT_URL;
+    $("virusTotalText").textContent = "VirusTotal";
+    $("virusTotalSubtext").textContent = t.viewResult;
+  } else {
+    vtLink.href = VIRUSTOTAL_UPLOAD_URL;
+    $("virusTotalText").textContent = "VirusTotal";
+    $("virusTotalSubtext").textContent = t.scanFile;
+  }
+}
+
+function renderBugs() {
+  const t = TEXT[currentLanguage];
+  const list = $("bugList");
+  list.innerHTML = "";
+
+  KNOWN_BUGS.forEach(bug => {
+    const row = document.createElement("div");
+    row.className = "bug-strip";
+    row.innerHTML = `
+      <span class="bug-status">${t.recognized}</span>
+      <p class="bug-text">${translated(bug)}</p>
+      <span class="bug-state">${t.fixing}</span>
+    `;
+    list.appendChild(row);
+  });
+
+  $("bugCount").textContent = String(KNOWN_BUGS.length).padStart(2, "0");
+}
+
+function renderBuilds() {
+  const t = TEXT[currentLanguage];
+  const history = $("history");
+  history.innerHTML = "";
+
+  BUILDS.forEach((build, i) => {
+    const row = document.createElement("article");
+    row.className = "build-row";
+
+    const action = i === 0
+      ? `<a class="build-download" href="${buildFile(build)}" download>${t.downloadRar}</a>`
+      : `<span class="build-download disabled">${t.blocked}</span>`;
+
+    row.innerHTML = `
+      <div class="build-id">
+        ${build.build}
+        ${i === 0 ? `<span class="current">${t.current}</span>` : ""}
+      </div>
+
+      <div>
+        <div class="build-title">${translated(build.title)}</div>
+        <div class="build-notes">${translated(build.notes)}</div>
+        <div class="build-date">${build.version} • ${build.date}</div>
+      </div>
+
+      ${action}
+    `;
+
+    history.appendChild(row);
+  });
+
+  $("buildCount").textContent = String(BUILDS.length).padStart(2, "0");
+  observeBuildRows();
+}
+
+function applyLanguage(lang) {
+  currentLanguage = lang === "pt" ? "pt" : "en";
+  localStorage.setItem(LANGUAGE_KEY, currentLanguage);
+
+  renderStaticTranslations();
+  renderHero();
+  renderBugs();
+  renderBuilds();
+}
+
+$("langEN").addEventListener("click", () => applyLanguage("en"));
+$("langPT").addEventListener("click", () => applyLanguage("pt"));
 
 /* Reveal das seções */
 const revealTargets = document.querySelectorAll(".reveal");
@@ -965,14 +1146,23 @@ if ("IntersectionObserver" in window) {
 }
 
 /* Builds entram uma por uma */
-const buildRows = [...document.querySelectorAll(".build-row")];
+let buildObserver = null;
 
-if ("IntersectionObserver" in window) {
-  const buildObserver = new IntersectionObserver(entries => {
+function observeBuildRows() {
+  const buildRows = [...document.querySelectorAll(".build-row")];
+
+  if (!("IntersectionObserver" in window)) {
+    buildRows.forEach(row => row.classList.add("row-visible"));
+    return;
+  }
+
+  if (buildObserver) buildObserver.disconnect();
+
+  buildObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const index = buildRows.indexOf(entry.target);
-        entry.target.style.animationDelay = `${Math.max(index,0) * 100}ms`;
+        entry.target.style.animationDelay = `${Math.max(index, 0) * 100}ms`;
         entry.target.classList.add("row-visible");
         buildObserver.unobserve(entry.target);
       }
@@ -980,8 +1170,6 @@ if ("IntersectionObserver" in window) {
   }, { threshold: 0.08 });
 
   buildRows.forEach(row => buildObserver.observe(row));
-} else {
-  buildRows.forEach(row => row.classList.add("row-visible"));
 }
 
 /* Barra de progresso */
@@ -992,7 +1180,8 @@ window.addEventListener("scroll", () => {
   progress.style.width = pct + "%";
 }, { passive: true });
 
-
+/* Primeira renderização: inglês por padrão ou última escolha salva */
+applyLanguage(currentLanguage);
 </script>
 </body>
 </html>
